@@ -1,6 +1,7 @@
 package tool;
 
 import java.util.Scanner;
+import java.util.Random;
 
 public class Game {
 
@@ -20,6 +21,7 @@ public class Game {
     Scanner s4 =  new Scanner(System.in);
     boolean winner = false;
     int turn = 0;
+    Random rnd = new Random();
 
     public Game() {
         ship1.create(board);
@@ -108,5 +110,93 @@ public class Game {
             //System.out.println(turn);
         }
         }
-}   
 }
+    public void play1P() {
+        while (winner == false) {
+            if (turn %2 ==0) {
+                //System.out.println(board);
+                if (ship1.sunk(board)==false || ship2.sunk(board)==false || ship3.sunk(board)==false) {
+                    System.out.println("P1: Enter the Vertical Co-ordinate");
+                    int pos1 = s1.nextInt();
+                    System.out.println("P1: Enter the Horizontal Co-ordinate");
+                    int pos2 = s2.nextInt();
+                    if (board.attack(pos1, pos2) == true) {
+                        board2.set(pos1, pos2, 'H');
+                        System.out.println(board2.toString());
+                    }
+                    else {
+                        board2.set(pos1, pos2, 'M');
+                        System.out.println(board2.toString());
+                    }
+
+                    if (ship1.sunk(board)==true) {
+                        System.out.println("You Have Sunk the Square Ship");
+                    }
+
+                    if (ship2.sunk(board)==true) {
+                        System.out.println("You Have Sunk the Vertical Ship");
+                    }
+
+                    if (ship3.sunk(board)==true) {
+                        System.out.println("You Have Sunk the Horizontal Ship");
+                    }
+                }
+                if (ship1.sunk(board)==true && ship2.sunk(board)==true && ship3.sunk(board)==true) {
+                    System.out.println("Player 1 wins!");
+                    winner = true;
+                    break;
+                }
+                turn += 1;
+                //System.out.println("It is turn "+turn);
+                
+
+
+        }
+            if (turn %2 !=0) {
+                if (ship4.sunk(board3)==false || ship5.sunk(board3)==false || ship6.sunk(board3)==false && turn %2 != 0) {
+                    boolean valid = false;
+                    while (valid == false) {
+                        int pos1 = rnd.nextInt(4);
+                        int pos2 = rnd.nextInt(4);
+                        if (board3.check(pos1, pos2, 'w')) {
+                            if (board3.attack(pos1, pos2) == true) {
+                                board4.set(pos1, pos2, 'H');
+                                System.out.println("AI attacked position"+" "+pos1+" "+pos2);
+                                System.out.print("It was a hit");
+                                System.out.println(board4.toString());
+                            }
+                            else {
+                                board4.set(pos1, pos2, 'M');
+                                System.out.println("AI attacked position"+" "+pos1+" "+pos2);
+                                System.out.print("It was a miss");
+                                System.out.println(board4.toString());
+                            }
+                            if (ship4.sunk(board3)==true) {
+                                System.out.println("You Have Sunk the Square Ship");
+                            }
+        
+                            if (ship5.sunk(board3)==true) {
+                                System.out.println("You Have Sunk the Vertical Ship");
+                            }
+        
+                            if (ship6.sunk(board3)==true) {
+                                System.out.println("You Have Sunk the Horizontal Ship");
+                            }
+                            valid = true;
+        
+                        }
+                        if (ship4.sunk(board3)==true && ship5.sunk(board3)==true && ship6.sunk(board3)==true) {
+                            System.out.println("Player 2 wins!");
+                            winner = true;
+                            break;
+                    }
+                    }
+                    }
+                turn += 1;
+                //System.out.println("It is turn "+turn);
+            }
+        }
+    }
+}
+
+
