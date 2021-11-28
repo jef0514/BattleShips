@@ -30,7 +30,7 @@ public class Game {
         ship6.create(board3);
     }
 
-    public void play() {
+    public void play2P() {
         while (winner == false) {
             if (turn %2 ==0) {
                 //System.out.println(board);
