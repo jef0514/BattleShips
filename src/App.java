@@ -13,6 +13,6 @@ public class App {
         else if (ans == 2) {
             game.play2P();
         }
-
+        s1.close();
     }
 }
