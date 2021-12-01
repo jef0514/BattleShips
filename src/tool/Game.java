@@ -112,6 +112,8 @@ public class Game {
         }
 }
     public void play1P() {
+        int pos3 = 0;
+        int pos4 = 0;
         while (winner == false) {
             if (turn %2 ==0) {
                 //System.out.println(board);
@@ -155,15 +157,60 @@ public class Game {
             if (turn %2 !=0) {
                 if (ship4.sunk(board3)==false || ship5.sunk(board3)==false || ship6.sunk(board3)==false && turn %2 != 0) {
                     boolean valid = false;
+                    int hit = 0;
+                    int pos1, pos2 = 0;
                     while (valid == false) {
-                        int pos1 = rnd.nextInt(4);
-                        int pos2 = rnd.nextInt(4);
+                        switch(hit){
+                            case 1:
+                                if (pos3 == 4) {
+                                    hit += 1;
+                                }
+                                else {
+                                    pos1 = pos3 + 1;
+                                    pos2 = pos4;
+                                    hit += 1;
+                                }
+                            case 2:
+                                if (pos3 == 0) {
+                                    hit += 1;
+                                }
+                                else {
+                                    pos1 = pos3 - 1;
+                                    pos2 = pos4;
+                                    hit += 1;
+                                }
+                            case 3:
+                                if (pos4 == 4) {
+                                    hit += 1;
+                                }
+                                else {
+                                    pos1 = pos3;
+                                    pos2 = pos4+1;
+                                    hit += 1;
+                                }
+                            case 4:
+                                if (pos4 == 0) {
+                                    hit += 1;
+                                }
+                                else {
+                                    pos1 = pos3;
+                                    pos2 = pos4-1;
+                                    hit = 0;
+                                }
+                            default:
+                                pos1 = rnd.nextInt(4);
+                                pos2 = rnd.nextInt(4);
+                        }
+
                         if (board3.check(pos1, pos2, 'w')) {
                             if (board3.attack(pos1, pos2) == true) {
                                 board4.set(pos1, pos2, 'H');
                                 System.out.println("AI attacked position"+" "+pos1+" "+pos2);
                                 System.out.print("It was a hit");
                                 System.out.println(board4.toString());
+                                pos3 = pos1;
+                                pos4 = pos2;
+                                hit = 1;
                             }
                             else {
                                 board4.set(pos1, pos2, 'M');
