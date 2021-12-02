@@ -37,6 +37,14 @@ public class Board {
             System.out.println("You hit a ship");
             return true;
         }
+        else if (board[pos1][pos2] == 'M') {
+            System.out.println("You already attacked here");
+            return false;
+        }
+        else if (board[pos1][pos2] == 'H') {
+            System.out.println("You already attacked here");
+            return false;
+        }
         else {
             board[pos1][pos2] = 'M';
             System.out.println("You missed");

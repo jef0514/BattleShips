@@ -114,6 +114,8 @@ public class Game {
     public void play1P() {
         int pos3 = 0;
         int pos4 = 0;
+        int hit = 0;
+        boolean valid = false;
         while (winner == false) {
             if (turn %2 ==0) {
                 //System.out.println(board);
@@ -155,14 +157,15 @@ public class Game {
 
         }
             if (turn %2 !=0) {
+                System.out.println("Hit count"+hit);
+                valid = false;
                 if (ship4.sunk(board3)==false || ship5.sunk(board3)==false || ship6.sunk(board3)==false && turn %2 != 0) {
-                    boolean valid = false;
-                    int hit = 0;
                     int pos1, pos2 = 0;
                     while (valid == false) {
+                        System.out.println("it is turn: "+ turn);
                         switch(hit){
                             case 1:
-                                if (pos3 == 4) {
+                                if (pos3 == 4 || board3.attack(pos3 + 1, pos4)) {
                                     hit += 1;
                                 }
                                 else {
@@ -202,8 +205,13 @@ public class Game {
                                 pos2 = rnd.nextInt(4);
                         }
 
-                        if (board3.check(pos1, pos2, 'w')) {
-                            if (board3.attack(pos1, pos2) == true) {
+                        //pos1 = rnd.nextInt(4);
+                        //pos2 = rnd.nextInt(4);                     
+                        //System.out.println(hit);
+
+                        //if (board3.check(pos1, pos2, 'w')) {
+                            //System.out.println("check for water");
+                            if (board3.attack(pos1, pos2)) {
                                 board4.set(pos1, pos2, 'H');
                                 System.out.println("AI attacked position"+" "+pos1+" "+pos2);
                                 System.out.print("It was a hit");
@@ -232,6 +240,7 @@ public class Game {
                             valid = true;
         
                         }
+                        
                         if (ship4.sunk(board3)==true && ship5.sunk(board3)==true && ship6.sunk(board3)==true) {
                             System.out.println("Player 2 wins!");
                             winner = true;
@@ -244,6 +253,6 @@ public class Game {
             }
         }
     }
-}
+
 
 
